@@ -50,7 +50,8 @@ function createPromise(position, delay) {
   });
 }
 
-function onSubmit(){
+function onSubmit(event) {
+  event.preventDefault();
   let delay = delayInput.value;
   const amount = amountInput.value;
   const step = stepInput.value;

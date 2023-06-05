@@ -157,7 +157,7 @@ function start() {
       return;
     };
 
-    const partialtDate = convertMs(delta);
+    let partialtDate = convertMs(delta);
     console.log(partialtDate);
 
     days.textContent = partialtDate.days;
