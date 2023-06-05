@@ -32,7 +32,7 @@ const amountInput = document.querySelector('.amount');
 form.addEventListener('submit', onSubmit);
   
 function createPromise(position, delay) {  
-  return (promise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
 
     setTimeout(() => {
@@ -42,7 +42,7 @@ function createPromise(position, delay) {
         reject({ position, delay });
       }
     }, delay);
-  }));
+  });
 }
 
 function onSubmit(event) {
@@ -53,14 +53,19 @@ function onSubmit(event) {
 
   for (let i = 1; i <= amount; i += 1){
     createPromise(i, delay)
-      .then(({ position, delay }) => Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`))
-      .catch(({ position, delay }) => Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`));
+      .then(forThen)
+      .catch(forCatch);
     delay +=step;
    }
 };
 
+function forThen({ position, delay }) {
+  Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`, { timeout: 5000 },);
+}
 
-
+function forCatch({ position, delay }) {
+  Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, { timeout: 2000 },);
+}
 
 
 
