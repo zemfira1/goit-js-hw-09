@@ -22,11 +22,8 @@
 //     console.log(`❌ Rejected promise ${position} in ${delay}ms`);
 //   });
 
-//import Notiflix from 'notiflix';
+import Notiflix from 'notiflix';
 
-//____________________________________________________________________________
-//Здравствуйте! Я запуталась совсем c этим заданием. Не выходит. Помогите, пожалуйста!
-//_____________________________________________________________________________
 const form = document.querySelector('.form');
 const delayInput = document.querySelector('.delay');
 const stepInput = document.querySelector('.step');
@@ -35,31 +32,31 @@ const amountInput = document.querySelector('.amount');
 form.addEventListener('submit', onSubmit);
   
 function createPromise(position, delay) {  
-  const promise = new Promise((resolve, reject) => {
+  return (promise = new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
 
     setTimeout(() => {
       if (shouldResolve) {
-        resolve(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        resolve({ position, delay });
       } else {
-        reject(`❌ Rejected promise ${position} in ${delay}ms`);
+        reject({ position, delay });
       }
     }, delay);
-
-    return;
-  });
+  }));
 }
 
 function onSubmit(event) {
   event.preventDefault();
-  let delay = delayInput.value;
-  const amount = amountInput.value;
-  const step = stepInput.value;
+  let delay = Number(delayInput.value);
+  let amount = Number(amountInput.value);
+  let step = Number(stepInput.value);
 
   for (let i = 1; i <= amount; i += 1){
-    createPromise(i, delay).then(x => alert(x)).catch(y => alert(y));
+    createPromise(i, delay)
+      .then(({ position, delay }) => Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`))
+      .catch(({ position, delay }) => Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`));
     delay +=step;
-  }
+   }
 };
 
 

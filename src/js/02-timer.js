@@ -147,7 +147,7 @@ buttonStart.addEventListener('click', start);
 function start() {
   buttonStart.setAttribute('disabled', true);
   input.setAttribute('disabled', true);
-  isActive = false;
+  let isActive = false;
 
   let intervalId = setInterval(() => {
     const currentTime = Date.now();
